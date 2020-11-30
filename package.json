@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
+    "chai-sorted": "^0.2.0",
     "mocha": "^8.2.0",
     "nyc": "^15.1.0"
   }

@@ -2,46 +2,59 @@ module.exports = class Lista {
     #elementos;
 
     constructor() {
-        this.#elementos = [];
+        this.elementos = [];
     }
 
-    count() {
-        return this.#elementos.length;
+    count() {       
+        return this.elementos.length;
     }
 
-    find() {
-        if (this.#elementos.length == 1) {
-            return this.#elementos[0].valor;
-        }
-        return NaN;
+    find(clave) {
+        var index = this.elementos.findIndex((o => o.clave == clave));        
+        if (index < 0) return NaN; 
+        return this.elementos[index];       
     }
 
-    add(clave, valor) {
-        this.#elementos.push({clave, valor});
+    getValue(clave) {
+        var item = this.find(clave);  
+        if (item === NaN) return NaN;  
+        return item.valor;
+    }
+
+    getIndex(clave) {
+        return this.elementos.findIndex((o => o.clave == clave));         
+    }
+
+    add(clave, valor) { 
+        if (this.upd(clave, valor)) return false;        
+        this.elementos.push({'clave': clave,'valor': valor});
+        this.sort();
+        return true;
+    }
+
+    addAt(clave, valor, index) { 
+        if (this.upd(clave, valor)) return false;      
+        this.elementos.splice(index, 0, {'clave': clave,'valor': valor});        
+        this.sort();
+        return true;
     }
 
     upd(clave, valor) {
-        for (const item in this.#elementos) {
-            if (item.clave == clave) {
-                item.valor = valor;
-                return;
-            }
-        }
+        var index = this.getIndex(clave)
+        if (index < 0) return false;  
+        this.elementos[index] = {'clave': clave,'valor': valor};               
+        return true;
     }
 
     del(clave) {
-        var lst = this.#elementos;
-        for (i = 0; i < lst.length; i++) {
-            if (lst[i].clave == clave) {
-                lst.splice(i, 1);
-                return;
-            }
-        }
+        var index = this.getIndex(clave)
+        if (index < 0) return false;  
+        this.elementos.splice(index, 1);
+        return true;
     }
 
-
-    getSort(clave, valor) {
-        return this.#elementos.sort(compare("clave"));
+    sort(clave, valor) {
+        return this.elementos.sort(this.compare("clave"));
     }
 
     compare(prop) {

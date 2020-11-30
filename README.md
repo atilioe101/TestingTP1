@@ -4,7 +4,7 @@ Este repositorio presenta la implementación de una lista de pares clave:valor i
 
 ## Requisitos
 
-1. Almacenae pares clave:valor.
+1. Almacenar pares clave:valor.
 2. Las claves deben ser únicas.
 3. Las claves son cadenas de texto.
 4. Se debe poder recuperar un valor a partir de una clave.

@@ -1,15 +1,19 @@
 /**
- * En una lista vacía hay cero elementos.
- * Cuando se agrega un elemento a una lista vacía hay un elemento.
- * En una lista vacía no se encuentra ninguna clave.
- * Cuando se agrega un elemento a una lista vacía se puede recuperar el valor a partir de la clave.
- * Cuando se agrega una clave que ya está en la lista se actualiza el valor correspondiente.
- * Cuando se agregan un elemento a una lista vacía la lista de claves esta ordenada.
- * Cuando se agrega un elemento al principio la lista de claves esta ordenada.
- * Cuando se agrega un elemento al final la lista de claves esta ordenada.
+ * En una lista vacía hay cero elementos. [x]
+ * Cuando se agrega un elemento a una lista vacía hay un elemento. [x]
+ * En una lista vacía no se encuentra ninguna clave. [x]
+ * Cuando se agrega un elemento a una lista vacía se puede recuperar el valor a partir de la clave. [x]
+ * Cuando se agrega una clave que ya está en la lista se actualiza el valor correspondiente. [x]
+ * Cuando se agregan un elemento a una lista vacía la lista de claves esta ordenada. [x]
+ * Cuando se agrega un elemento al principio la lista de claves esta ordenada. [x]
+ * Cuando se agrega un elemento al final la lista de claves esta ordenada. [x]
+ * En una lista que no está vacia se debe poder borrar una pareja a partir de la clave. [x]
  */
 
-const assert = require("chai").assert;
+const chai = require("chai");
+chai.use(require("chai-sorted"));
+const assert = chai.assert;
+expect = chai.expect; 
 const Lista = require("../src/lista.js");
 
 describe("en una lista vacia" , function() {
@@ -24,49 +28,57 @@ describe("en una lista vacia" , function() {
     })
 })
 
+describe("en una lista que no está vacía" , function() {
+    var lista = new Lista();
+    lista.add("clave", "valor");     
+    
+    it("se borra una pareja a partir de la clave", function() { 
+        lista.del("clave");      
+        assert.isNaN(lista.find("clave"));
+    })    
+
+})
+
 describe("cuado se agrega un elemento a una lista vacía" , function() {
     var lista = new Lista();
-    lista.add("clave", "valor");
-
-    it("hay un elemento", function() {
-        assert.equal(lista.count(), 1);
-    })  
-})
-
-describe("Cuando se recupera el contenido de la lista" , function() {
-    var lista = new Lista();
-    lista.add("clave", "valor");
+    lista.add("clave", "valor");    
 
     it("hay un elemento", function() {
         assert.equal(lista.count(), 1);
     })  
 
-    it("existe el elemento", function() {
-        assert.equal(lista.find("clave"), "valor");
-    })
+    it("se puede recuperar el valor a partir de la clave", function() {        
+        assert.equal(lista.getValue("clave"), "valor");
+    })  
 
-    it("la lista está ordenada por clave", function() {
-        assert.call(lista.getSort());
-    })
-
-})    
-
-describe("cuado se modifica el valor de un elemento de  la lista" , function() {
-    var lista = new Lista();
-    lista.upd("clave", "nuevo_valor");  
-    
-    it("se modifico el elemento", function() {
-        assert.equal(lista.find("clave"), "nuevo_valor");
+    it("la lista de claves está ordenada", function() {  
+        expect(lista.elementos).to.be.ascendingBy("clave");        
     })
 })
 
-describe("cuado se borra un elemento de la lista " , function() {
+describe("cuado se agrega un elemento a una lista que no está vacía" , function() {
     var lista = new Lista();
-    lista.del("clave");  
+    lista.add("clave", "valor");    
+
+    it("si la clave existe se actualiza el valor correspondiente", function() {
+        lista.add("clave", "nuevo_valor");
+        assert.equal(lista.getValue("clave"), "nuevo_valor");
+    })  
+
+    it("si se agrega al principio, la lista está ordenada", function() {
+        lista.addAt("nueva_clave", "nuevo_valor", 0);
+        expect(lista.elementos).to.be.ascendingBy("clave");        
+    })   
     
-    it("no existe el elemento", function() {
-        assert.isNaN(lista.find("clave"));
-    })
+    it("si se agrega al final, la lista está ordenada", function() {
+        lista.addAt("nueva_clave", "nuevo_valor", lista.count());
+        expect(lista.elementos).to.be.ascendingBy("clave");        
+    })    
+    
 })
+
+
+
+
 
 
