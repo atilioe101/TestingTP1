@@ -65,15 +65,11 @@ describe("cuado se agrega un elemento a una lista que no está vacía" , functio
         assert.equal(lista.getValue("clave"), "nuevo_valor");
     })  
 
-    it("si se agrega al principio, la lista está ordenada", function() {
-        lista.addAt("nueva_clave", "nuevo_valor", 0);
-        expect(lista.elementos).to.be.ascendingBy("clave");        
+    it("la lista de claves está ordenada", function() {
+        lista.add("nueva_clave", "nuevo_valor");
+        var keys = lista.elementos.map(p => p["clave"]);        
+        expect(keys.sort()).to.be.sorted();        
     })   
-    
-    it("si se agrega al final, la lista está ordenada", function() {
-        lista.addAt("nueva_clave", "nuevo_valor", lista.count());
-        expect(lista.elementos).to.be.ascendingBy("clave");        
-    })    
     
 })
 

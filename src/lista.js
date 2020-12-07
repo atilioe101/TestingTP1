@@ -27,17 +27,10 @@ module.exports = class Lista {
 
     add(clave, valor) { 
         if (this.upd(clave, valor)) return false;        
-        this.elementos.push({'clave': clave,'valor': valor});
-        this.sort();
+        this.elementos.push({'clave': clave,'valor': valor});        
         return true;
     }
-
-    addAt(clave, valor, index) { 
-        if (this.upd(clave, valor)) return false;      
-        this.elementos.splice(index, 0, {'clave': clave,'valor': valor});        
-        this.sort();
-        return true;
-    }
+   
 
     upd(clave, valor) {
         var index = this.getIndex(clave)
@@ -51,21 +44,7 @@ module.exports = class Lista {
         if (index < 0) return false;  
         this.elementos.splice(index, 1);
         return true;
-    }
-
-    sort(clave, valor) {
-        return this.elementos.sort(this.compare("clave"));
-    }
-
-    compare(prop) {
-        return function(a,b) {
-            if (a[prop] < b[prop])
-                return -1;
-            if (a[prop] > b[prop])
-                return 1;
-            return 0;
-        };
-    }   
+    }    
 
 };
 
