@@ -52,7 +52,8 @@ describe("cuado se agrega un elemento a una lista vacía" , function() {
     })  
 
     it("la lista de claves está ordenada", function() {  
-        expect(lista.elementos).to.be.ascendingBy("clave");        
+        var keys = lista.getKeys();        
+        expect(keys.sort()).to.be.sorted();       
     })
 })
 
@@ -67,7 +68,7 @@ describe("cuado se agrega un elemento a una lista que no está vacía" , functio
 
     it("la lista de claves está ordenada", function() {
         lista.add("nueva_clave", "nuevo_valor");
-        var keys = lista.elementos.map(p => p["clave"]);        
+        var keys = lista.getKeys();        
         expect(keys.sort()).to.be.sorted();        
     })   
     
